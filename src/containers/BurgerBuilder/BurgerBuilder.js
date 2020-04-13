@@ -27,8 +27,10 @@ class BurgerBuilder extends Component {
   }
 
   componentDidMount() {
-    axios.get('/ingredients').then(res => {
-      this.setState({ ingredients: res.data });
+    axios.get('/ingredients.json').then(res => {
+    // axios.get('/users').then(res => {
+      console.log(res);
+    this.setState({ ingredients: res.data });
     }).catch(err => { this.setState({ error: true }) });
   }
 
@@ -100,7 +102,7 @@ class BurgerBuilder extends Component {
   }
 
   render() {
-
+    // return null;
     const disableInfo = { ...this.state.ingredients };
 
     for (let key in disableInfo) {
@@ -123,7 +125,7 @@ class BurgerBuilder extends Component {
             purchasable={this.state.purchasable}
             ordered={this.perchaseHandler}
           />
-          {burger}
+          {/* {burger} */}
         </Aux>
       );
       orderSumary = <OrderSumay ingredients={this.state.ingredients} purchaseCancel={this.cancelPerchaseHandler} purchaseContinue={this.purchaseContinueHandler} />;
