@@ -27,11 +27,16 @@ class BurgerBuilder extends Component {
   }
 
   componentDidMount() {
+    console.log('Buider mounted');
     axios.get('/ingredients.json').then(res => {
-    // axios.get('/users').then(res => {
+      // axios.get('/users').then(res => {
       console.log(res);
-    this.setState({ ingredients: res.data });
+      this.setState({ ingredients: res.data });
     }).catch(err => { this.setState({ error: true }) });
+  }
+
+  componentWillUnmount() {
+    console.log('Buider will unmount');
   }
 
   updatePurchasable = (ingredients) => {
@@ -81,24 +86,18 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Thien',
-        address: {
-          street: '123',
-          zipCode: '0000',
-          country: 'Viet Nam'
-        },
-        email: 'test@test.io'
-      },
-      deliveryMethod: 'fastest'
-    };
 
-    axios.post('/orders.json', order).then(res => { this.setState({ loading: false, purchasing: false }) })
-      .catch(err => { this.setState({ loading: false, purchasing: false }) })
+
+
+    this.props.history.push({
+      pathname: '/checkout',
+      state: {
+        ingredients: this.state.ingredients,
+        totalPrice: this.state.totalPrice
+      }
+    });
+
+
   }
 
   render() {
